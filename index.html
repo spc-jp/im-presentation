@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>顧客深掘り営業フロー｜制作会社向けソリューション</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        serif: ['"Shippori Mincho"', 'serif'],
+                        english: ['"Outfit"', 'sans-serif'],
+                    },
+                    colors: {
+                        insta: {
+                            purple: '#833AB4',
+                            pink: '#FD1D1D',
+                            orange: '#F77737',
+                            yellow: '#FCAF45',
+                        }
+                    },
+                    backgroundImage: {
+                        'insta-gradient': 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
+                        'insta-text': 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
+                        'glass': 'rgba(255, 255, 255, 0.7)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FAFAFA;
+            color: #262626;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+        
+        /* Insta-like Text Gradient */
+        .text-gradient {
+            background: linear-gradient(to right, #833AB4, #FD1D1D, #FCAF45);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Insta-like Button Gradient */
+        .btn-gradient {
+            background: linear-gradient(45deg, #833AB4, #FD1D1D, #F77737);
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(253, 29, 29, 0.3);
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.07);
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animated Orb Background */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: moveOrb 20s infinite alternate;
+        }
+        @keyframes moveOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.2); }
+        }
+        
+        /* Connecting Lines for Y-shape flow */
+        .flow-line-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navigation (Glass) -->
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-white/50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg btn-gradient flex items-center justify-center text-white">
+                        <i class="fa-solid fa-bolt text-sm"></i>
+                    </div>
+                    <span class="font-english font-bold text-xl tracking-tight text-gradient">DeepDive Flow</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium font-english text-gray-600">
+                    <a href="#new-standard" class="hover:text-pink-600 transition">NEW FLOW</a>
+                    <a href="#problem" class="hover:text-pink-600 transition">PROBLEM</a>
+                    <a href="#tools" class="hover:text-pink-600 transition">TOOLS</a>
+                    <a href="#contact" class="btn-gradient text-white px-5 py-2 rounded-full font-bold shadow-md">
+                        Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-24 overflow-hidden">
+        <!-- Animated Background Orbs -->
+        <div class="orb w-96 h-96 bg-purple-300 top-0 left-0"></div>
+        <div class="orb w-80 h-80 bg-pink-300 bottom-0 right-0"></div>
+        <div class="orb w-64 h-64 bg-orange-200 top-20 right-20"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-block bg-white/80 backdrop-blur-sm border border-pink-100 px-4 py-1.5 rounded-full mb-8 shadow-sm animate-bounce-slow">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 font-bold text-xs tracking-wider font-english">FOR WEB CREATORS</span>
+            </div>
+            
+            <h1 class="serif-font text-4xl md:text-7xl font-bold mb-8 leading-tight text-gray-900">
+                考えるを、<br>
+                <span class="text-gradient">ひとりにしない。</span>
+            </h1>
+            
+            <p class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
+                直販でも、代理店経由でも。<br>
+                「まだ早い」と言われた顧客を資産に変える、<br>
+                新しい営業導線のスタンダード。
+            </p>
+        </div>
+    </section>
+
+    <!-- New Standard Section (Moved to Top) -->
+    <section id="new-standard" class="py-24 bg-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-b from-purple-50/50 to-white z-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Modified Header: Question & Catchcopy -->
+            <div class="text-center mb-20 relative">
+                <!-- Background Decor Text (Slightly smaller) -->
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[4rem] md:text-[8rem] font-bold text-gray-100 -z-10 opacity-40 font-english select-none tracking-widest whitespace-nowrap">
+                    OPPORTUNITY
+                </div>
+
+                <span class="inline-block py-1.5 px-4 rounded-full bg-red-100 text-red-500 text-xs font-bold font-english tracking-wider mb-8 animate-pulse border border-red-200 shadow-sm">
+                    <i class="fa-solid fa-circle-question mr-1"></i> QUESTION
+                </span>
+                
+                <h2 class="serif-font font-bold text-gray-900 leading-tight relative z-10">
+                    <!-- Giant Main Text -->
+                    <span class="block text-7xl md:text-9xl mb-3 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 drop-shadow-sm transform hover:scale-105 transition duration-500 cursor-default py-2">
+                        商談、
+                    </span>
+                    <!-- Sub Text -->
+                    <span class="block text-2xl md:text-4xl md:mt-2 text-gray-800">
+                        その場限りで<br class="md:hidden">終わっていませんか？
+                    </span>
+                </h2>
+
+                <div class="mt-10 text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-white shadow-sm">
+                    <p class="mb-6 font-medium">
+                        見積もりを出して、<br>
+                        検討になって、<br>
+                        そのままフェードアウト。
+                    </p>
+                    <p class="font-bold text-gray-800 text-xl">
+                        それ、営業力の問題じゃありません。<br>
+                        <span class="text-pink-600 border-b-4 border-pink-200 inline-block mt-2 px-1">“つなぐ仕組み”がないだけです。</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- New Flow Structure (Centered Flow) -->
+            <div class="max-w-6xl mx-auto relative">
+                
+                <!-- Connecting Lines (Visual Only) -->
+                <div class="flow-line-container hidden md:block">
+                    <!-- Left Line -->
+                    <div class="absolute top-[20%] left-[25%] w-[2px] h-[350px] bg-gradient-to-b from-blue-100 to-transparent"></div>
+                    <!-- Right Line -->
+                    <div class="absolute top-[20%] right-[25%] w-[2px] h-[350px] bg-gradient-to-b from-purple-100 to-transparent"></div>
+                    <!-- Merge Curves (CSS borders) -->
+                    <div class="absolute top-[auto] bottom-[180px] left-1/2 -translate-x-1/2 w-[50%] h-[100px] border-b-2 border-l-2 border-r-2 border-pink-200 rounded-b-[50px] opacity-50 z-0"></div>
+                    <div class="absolute top-[auto] bottom-[120px] left-1/2 -translate-x-1/2 w-2 h-[60px] bg-pink-200 opacity-50"></div>
+                </div>
+
+                <!-- 1. The Two Scenarios (Side by Side) -->
+                <div class="grid md:grid-cols-2 gap-12 mb-24 relative z-10">
+                    
+                    <!-- Scenario 1: Direct Sales -->
+                    <div class="group relative">
+                        <!-- Icon Badge -->
+                        <div class="absolute -top-6 left-8 w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl border-4 border-white flex items-center justify-center z-20 shadow-md group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-user-tie text-xl"></i>
+                        </div>
+                        
+                        <div class="bg-white pt-10 pb-6 px-6 rounded-[2rem] shadow-sm border border-gray-100 hover:border-blue-200 hover:shadow-xl transition relative overflow-hidden h-full">
+                            <!-- Tag -->
+                            <span class="absolute top-0 right-0 bg-blue-100 text-blue-600 text-[10px] font-bold px-4 py-1.5 rounded-bl-xl font-english tracking-wider">DIRECT SALES</span>
+                            
+                            <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2 text-lg">
+                                直販・ダイレクト
+                                <span class="text-xs font-normal text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">の場合</span>
+                            </h4>
+
+                            <!-- Speech Bubble -->
+                            <div class="flex gap-3 mb-6">
+                                <div class="bg-gray-50 p-4 rounded-2xl rounded-tl-none text-sm text-gray-600 italic border border-gray-100 relative shadow-sm w-full">
+                                    <i class="fa-solid fa-quote-left text-gray-200 text-xl absolute -top-2 -left-2"></i>
+                                    「今は予算がなくて…」と断られそう
+                                </div>
+                            </div>
+
+                            <!-- Action -->
+                            <div class="pl-4 border-l-2 border-blue-200 ml-2 space-y-4">
+                                <div class="text-sm font-bold text-gray-800 flex items-center">
+                                    <span class="w-6 h-6 rounded-full bg-yellow-100 text-yellow-500 flex items-center justify-center text-xs mr-2"><i class="fa-solid fa-lightbulb"></i></span>
+                                    こう切り出す！
+                                </div>
+                                <div class="text-blue-600 font-bold text-lg leading-snug">
+                                    「まずは手元の資料整理や、<br>思考の整理から始めませんか？」
+                                </div>
+                                
+                                <!-- Connecting Guide Label -->
+                                <div>
+                                    <div class="text-xs font-bold text-blue-400 mb-2 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-link"></i> つなぐガイド
+                                    </div>
+                                    
+                                    <!-- CTA Package Card -->
+                                    <div class="w-full bg-blue-50 border border-blue-200 px-4 py-4 rounded-xl shadow-sm">
+                                        <!-- Header -->
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-10 h-10 rounded-lg bg-white/60 flex items-center justify-center text-blue-600 text-lg shadow-sm">
+                                                <i class="fa-solid fa-folder-open"></i>
+                                            </div>
+                                            <div class="text-left">
+                                                <span class="block text-xs text-blue-500 opacity-80 mb-0.5">その場で渡す</span>
+                                                <span class="font-bold text-base text-blue-700">資料・思考整理セット</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Inner Buttons -->
+                                        <div class="flex flex-col gap-2">
+                                            <a href="https://spc-jp.github.io/quiet-doc/" target="_blank" class="flex items-center gap-3 bg-white hover:bg-blue-600 text-blue-600 hover:text-white border border-blue-100 hover:border-blue-600 py-2 px-3 rounded-lg transition-all duration-300 group/inner shadow-sm text-left">
+                                                <div class="w-8 h-8 rounded-md bg-blue-50 flex items-center justify-center text-blue-500 group-hover/inner:bg-white/20 group-hover/inner:text-white flex-shrink-0">
+                                                    <i class="fa-solid fa-file-shield"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="block text-[10px] font-normal opacity-80 mb-0.5 group-hover/inner:opacity-100">外に出さずに、資料を整える</span>
+                                                    <span class="block text-xs font-bold">Quiet Doc</span>
+                                                </div>
+                                            </a>
+
+                                            <a href="https://spc-jp.github.io/Hitokoto2.0-apl/" target="_blank" class="flex items-center gap-3 bg-white hover:bg-blue-600 text-blue-600 hover:text-white border border-blue-100 hover:border-blue-600 py-2 px-3 rounded-lg transition-all duration-300 group/inner shadow-sm text-left">
+                                                <div class="w-8 h-8 rounded-md bg-blue-50 flex items-center justify-center text-blue-500 group-hover/inner:bg-white/20 group-hover/inner:text-white flex-shrink-0">
+                                                    <i class="fa-solid fa-quote-right"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="block text-[10px] font-normal opacity-80 mb-0.5 group-hover/inner:opacity-100">迷えるリーダーの処方箋</span>
+                                                    <span class="block text-xs font-bold">Hitokoto</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 2: Agency -->
+                    <div class="group relative">
+                        <!-- Icon Badge -->
+                        <div class="absolute -top-6 left-8 w-14 h-14 bg-purple-50 text-purple-600 rounded-2xl border-4 border-white flex items-center justify-center z-20 shadow-md group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-handshake text-xl"></i>
+                        </div>
+                        
+                        <div class="bg-white pt-10 pb-6 px-6 rounded-[2rem] shadow-sm border border-gray-100 hover:border-purple-200 hover:shadow-xl transition relative overflow-hidden h-full">
+                            <!-- Tag -->
+                            <span class="absolute top-0 right-0 bg-purple-100 text-purple-600 text-[10px] font-bold px-4 py-1.5 rounded-bl-xl font-english tracking-wider">AGENCY PARTNER</span>
+                            
+                            <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2 text-lg">
+                                代理店・パートナー
+                                <span class="text-xs font-normal text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">の場合</span>
+                            </h4>
+
+                            <!-- Speech Bubble -->
+                            <div class="flex gap-3 mb-6">
+                                <div class="bg-gray-50 p-4 rounded-2xl rounded-tl-none text-sm text-gray-600 italic border border-gray-100 relative shadow-sm w-full">
+                                    <i class="fa-solid fa-quote-left text-gray-200 text-xl absolute -top-2 -left-2"></i>
+                                    Webの知識がないから提案しづらい…
+                                </div>
+                            </div>
+
+                            <!-- Action -->
+                            <div class="pl-4 border-l-2 border-purple-200 ml-2 space-y-4">
+                                <div class="text-sm font-bold text-gray-800 flex items-center">
+                                    <span class="w-6 h-6 rounded-full bg-yellow-100 text-yellow-500 flex items-center justify-center text-xs mr-2"><i class="fa-solid fa-lightbulb"></i></span>
+                                    こう切り出す！
+                                </div>
+                                <div class="text-purple-600 font-bold text-lg leading-snug">
+                                    「SNS運用の継続支援なら、<br>専門知識なしで提案できますよ」
+                                </div>
+
+                                <!-- Connecting Guide Label -->
+                                <div>
+                                    <div class="text-xs font-bold text-purple-400 mb-2 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-link"></i> つなぐガイド
+                                    </div>
+                                    
+                                    <!-- CTA Package Card -->
+                                    <div class="w-full bg-purple-50 border border-purple-200 px-4 py-4 rounded-xl shadow-sm">
+                                        <!-- Header -->
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-10 h-10 rounded-lg bg-white/60 flex items-center justify-center text-purple-600 text-lg shadow-sm">
+                                                <i class="fa-solid fa-pen-nib"></i>
+                                            </div>
+                                            <div class="text-left">
+                                                <span class="block text-xs text-purple-500 opacity-80 mb-0.5">その場で実演・提案</span>
+                                                <span class="font-bold text-base text-purple-700">SNS運用支援キット</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Inner Buttons -->
+                                        <div class="flex flex-col gap-2">
+                                            <!-- Item 1: 投稿ナビ Pro -->
+                                            <a href="https://spc-jp.github.io/ai-start-shigyo-apl/" target="_blank" class="flex items-center gap-3 bg-white hover:bg-purple-600 text-purple-600 hover:text-white border border-purple-100 hover:border-purple-600 py-2 px-3 rounded-lg transition-all duration-300 group/inner shadow-sm text-left">
+                                                <div class="w-8 h-8 rounded-md bg-purple-50 flex items-center justify-center text-purple-500 group-hover/inner:bg-white/20 group-hover/inner:text-white flex-shrink-0">
+                                                    <i class="fa-solid fa-pen-nib"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="block text-[10px] font-normal opacity-80 mb-0.5 group-hover/inner:opacity-100">めんどうを、考えなくていい形に</span>
+                                                    <span class="block text-xs font-bold">投稿ナビ Pro</span>
+                                                </div>
+                                            </a>
+
+                                            <!-- Item 2: 税理士 投稿ナビ Pro -->
+                                            <a href="https://spc-jp.github.io/shisanka-apl/" target="_blank" class="flex items-center gap-3 bg-white hover:bg-purple-600 text-purple-600 hover:text-white border border-purple-100 hover:border-purple-600 py-2 px-3 rounded-lg transition-all duration-300 group/inner shadow-sm text-left">
+                                                <div class="w-8 h-8 rounded-md bg-purple-50 flex items-center justify-center text-purple-500 group-hover/inner:bg-white/20 group-hover/inner:text-white flex-shrink-0">
+                                                    <i class="fa-solid fa-file-contract"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="block text-[10px] font-normal opacity-80 mb-0.5 group-hover/inner:opacity-100">SNS投稿、これ一本。</span>
+                                                    <span class="block text-xs font-bold">税理士 投稿ナビ Pro</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Merge Point (Centered - Widened) -->
+                <div class="relative max-w-4xl mx-auto mb-16 mt-12 text-center z-10">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 btn-gradient rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(253,29,29,0.4)] animate-pulse z-20">
+                        <i class="fa-solid fa-arrow-down text-white text-2xl"></i>
+                    </div>
+                    
+                    <div class="glass-card mt-8 pt-12 pb-8 px-10 rounded-[3rem] border-pink-200 shadow-xl bg-gradient-to-b from-white to-pink-50 relative z-10">
+                        <h4 class="font-bold text-3xl text-gray-800 mb-3">どちらも「考える入口LP」へ合流</h4>
+                        <p class="text-gray-500 text-lg">
+                            顧客は価値を感じ、制作会社は資産を得る。<br>
+                            Win-Winの関係がここから始まります。
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section (Updated: Pie Charts) -->
+    <section id="problem" class="py-24 bg-gray-50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-english text-xs font-bold text-gray-400 tracking-[0.2em] mb-3">CURRENT ISSUES</h2>
+                <h3 class="serif-font text-2xl md:text-3xl font-bold text-gray-800">
+                    「今すぐ客」は、わずか10%。<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-600 font-bold mt-2 block">残りの90%を捨てていませんか？</span>
+                </h3>
+                <p class="text-gray-500 mt-4 text-sm md:text-base">
+                    従来のフローではこぼれ落ちていた「そのうち客」こそが、<br>
+                    実は一番大きな<span class="font-bold text-gray-800 border-b border-yellow-400">「未発掘の資産」</span>です。
+                </p>
+            </div>
+
+            <!-- Pie Charts Container -->
+            <div class="grid md:grid-cols-2 gap-12 items-stretch relative z-10">
+                
+                <!-- Chart 1: Direct Sales -->
+                <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-gray-100 flex flex-col items-center text-center relative overflow-visible group hover:shadow-lg transition duration-300">
+                    <h4 class="font-bold text-gray-700 mb-10 flex items-center gap-2 text-xl">
+                        <span class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-sm text-lg"><i class="fa-solid fa-user-tie"></i></span>
+                        直販・ダイレクト
+                    </h4>
+                    
+                    <div class="relative w-80 h-80 mb-12 group-hover:scale-105 transition duration-500">
+                        <!-- Pie Chart: 10% Green (#4ade80), 90% Light Red (#fee2e2) -->
+                        <div class="w-full h-full rounded-full shadow-inner" style="background: conic-gradient(#4ade80 0% 10%, #fee2e2 10% 100%); transform: rotate(-36deg);"></div>
+                        
+                        <!-- Center Hole (Donut) -->
+                        <div class="absolute inset-10 bg-white rounded-full flex flex-col items-center justify-center shadow-md">
+                            <span class="text-7xl font-bold text-red-400 font-english tracking-tighter">90<span class="text-2xl">%</span></span>
+                            <span class="text-sm text-gray-500 font-bold mt-1">検討・保留</span>
+                            <span class="text-xs text-gray-400">(そのうち客)</span>
+                        </div>
+
+                        <!-- Label: Success -->
+                        <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4">
+                            <div class="bg-white border border-green-200 text-green-700 text-sm px-4 py-2 rounded-full font-bold shadow-sm flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+                                10% 今すぐ客
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full bg-red-50/50 rounded-2xl p-6 border border-red-100 relative mt-auto">
+                        <p class="text-red-500 text-base font-bold mb-1">
+                            <i class="fa-solid fa-triangle-exclamation mr-1"></i>これまでは「消失」
+                        </p>
+                        <p class="text-sm text-gray-500">追客できずにフェードアウト...</p>
+                        
+                        <!-- Gold Tag -->
+                        <div class="absolute -bottom-5 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                             <span class="bg-gradient-to-r from-yellow-50 to-white text-yellow-700 text-sm px-5 py-2.5 rounded-full font-bold border border-yellow-200 shadow-md flex items-center gap-2 ring-4 ring-white">
+                                <i class="fa-solid fa-gem text-yellow-500"></i> 本来は「金の卵」
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart 2: Agency -->
+                <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-gray-100 flex flex-col items-center text-center relative overflow-visible group hover:shadow-lg transition duration-300">
+                    <h4 class="font-bold text-gray-700 mb-10 flex items-center gap-2 text-xl">
+                        <span class="w-12 h-12 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center shadow-sm text-lg"><i class="fa-solid fa-handshake"></i></span>
+                        代理店経由
+                    </h4>
+                    
+                    <div class="relative w-80 h-80 mb-12 group-hover:scale-105 transition duration-500">
+                        <!-- Pie Chart: 20% Purple (#c084fc), 80% Light Red (#fee2e2) -->
+                        <div class="w-full h-full rounded-full shadow-inner" style="background: conic-gradient(#c084fc 0% 20%, #fee2e2 20% 100%); transform: rotate(-72deg);"></div>
+                        
+                        <!-- Center Hole (Donut) -->
+                        <div class="absolute inset-10 bg-white rounded-full flex flex-col items-center justify-center shadow-md">
+                            <span class="text-5xl font-bold text-red-400">多数</span>
+                            <span class="text-sm text-gray-500 font-bold mt-1">コンペ負け・失注</span>
+                        </div>
+
+                        <!-- Label: Success -->
+                        <div class="absolute top-4 right-0 transform translate-x-4 -translate-y-2">
+                            <div class="bg-white border border-purple-200 text-purple-700 text-sm px-4 py-2 rounded-full font-bold shadow-sm flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+                                一部 案件化
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full bg-red-50/50 rounded-2xl p-6 border border-red-100 relative mt-auto">
+                        <p class="text-red-500 text-base font-bold mb-1">
+                            <i class="fa-solid fa-triangle-exclamation mr-1"></i>これまでは「消失」
+                        </p>
+                        <p class="text-sm text-gray-500">接点が切れ、他社へ流出...</p>
+                        
+                        <!-- Gold Tag -->
+                        <div class="absolute -bottom-5 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                             <span class="bg-gradient-to-r from-yellow-50 to-white text-yellow-700 text-sm px-5 py-2.5 rounded-full font-bold border border-yellow-200 shadow-md flex items-center gap-2 ring-4 ring-white">
+                                <i class="fa-solid fa-coins text-yellow-500"></i> 資産価値アリ
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section (Details) -->
+    <section id="tools" class="py-24 bg-white relative">
+        <!-- Connecting Arrow -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-50 z-20 text-gray-300">
+            <i class="fa-solid fa-arrow-down"></i>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <!-- Bridge Text: Logic connecting Problem to Solution -->
+                <p class="font-bold text-gray-800 mb-12 leading-relaxed">
+                    <span class="block text-2xl md:text-4xl mb-4 tracking-tight">この「90%の未発掘ゾーン」にアプローチするには、</span>
+                    <span class="inline-block bg-gradient-to-r from-purple-50 to-pink-50 text-gray-600 px-6 py-2 rounded-full text-sm md:text-lg border border-pink-100">
+                        従来の「売り込み」ではなく、顧客への<span class="text-pink-600 font-bold">「気づき」</span>が必要です。
+                    </span>
+                </p>
+
+                <!-- Specified Copy -->
+                 <span class="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-full text-base font-bold shadow-xl mb-6 transform hover:scale-105 transition duration-300">
+                    <i class="fa-solid fa-box-open"></i>
+                    深掘りを実現する「4つの武器」
+                </span>
+                <p class="text-gray-500 text-lg max-w-3xl mx-auto leading-relaxed">
+                    顧客の「隠れた課題」を引き出し、関係を継続させるための<br>
+                    4つの専用ツール（武器）をご用意しました。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Tool 1: Quiet Doc -->
+                <a href="https://spc-jp.github.io/quiet-doc/" target="_blank" class="group bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 relative overflow-hidden text-center md:text-left">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                    
+                    <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition mx-auto md:mx-0 shadow-sm">
+                        <i class="fa-solid fa-file-shield text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-base mb-1 group-hover:text-blue-600 transition">Quiet Doc</h4>
+                    <p class="text-[10px] text-gray-400 font-english font-bold tracking-wide">外に出さずに、資料を整える</p>
+                    <div class="absolute bottom-4 right-4 text-gray-300 group-hover:text-blue-500 transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                </a>
+
+                <!-- Tool 2: Hitokoto -->
+                <a href="https://spc-jp.github.io/Hitokoto2.0-apl/" target="_blank" class="group bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-orange-200 relative overflow-hidden text-center md:text-left">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-yellow-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                    
+                    <div class="w-14 h-14 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center mb-4 group-hover:scale-110 transition mx-auto md:mx-0 shadow-sm">
+                        <i class="fa-solid fa-quote-right text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-base mb-1 group-hover:text-orange-600 transition">Hitokoto</h4>
+                    <p class="text-[10px] text-gray-400 font-english font-bold tracking-wide">迷えるリーダーの処方箋</p>
+                    <div class="absolute bottom-4 right-4 text-gray-300 group-hover:text-orange-500 transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                </a>
+
+                <!-- Tool 3: 投稿ナビ Pro -->
+                <a href="https://spc-jp.github.io/ai-start-shigyo-apl/" target="_blank" class="group bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-pink-200 relative overflow-hidden text-center md:text-left">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-400 to-pink-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                    
+                    <div class="w-14 h-14 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center mb-4 group-hover:scale-110 transition mx-auto md:mx-0 shadow-sm">
+                        <i class="fa-solid fa-pen-nib text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-base mb-1 group-hover:text-pink-600 transition">投稿ナビ Pro</h4>
+                    <p class="text-[10px] text-gray-400 font-english font-bold tracking-wide">めんどうを、考えなくていい形に</p>
+                    <div class="absolute bottom-4 right-4 text-gray-300 group-hover:text-pink-500 transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                </a>
+
+                <!-- Tool 4: 税理士 投稿ナビ Pro -->
+                <a href="https://spc-jp.github.io/shisanka-apl/" target="_blank" class="group bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-purple-200 relative overflow-hidden text-center md:text-left">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                    
+                    <div class="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition mx-auto md:mx-0 shadow-sm">
+                        <i class="fa-solid fa-file-contract text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-base mb-1 group-hover:text-purple-600 transition">税理士 投稿ナビ Pro</h4>
+                    <p class="text-[10px] text-gray-400 font-english font-bold tracking-wide">SNS投稿、これ一本。</p>
+                    <div class="absolute bottom-4 right-4 text-gray-300 group-hover:text-purple-500 transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Merit Section -->
+    <section id="merit" class="py-24 bg-orange-50 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="serif-font text-3xl font-bold text-gray-800">
+                    制作会社のメリット
+                </h2>
+                <div class="w-16 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Merit 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition duration-300 border border-gray-100">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-cyan-500 flex items-center justify-center text-white text-xl mb-6 shadow-md">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-3">資産になる</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        直販でも代理店でも、失注リストがそのまま「見込み客リスト」に変わります。
+                    </p>
+                </div>
+                <!-- Merit 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition duration-300 border border-gray-100">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-orange-400 flex items-center justify-center text-white text-xl mb-6 shadow-md">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-3">次の提案へ</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        「ツールはどうですか？」という会話から、自然に次のWeb制作提案へ繋げられます。
+                    </p>
+                </div>
+                <!-- Merit 3 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition duration-300 border border-gray-100">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center text-white text-xl mb-6 shadow-md">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-3">顧客理解</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        ツール内の行動データを見ることで、顧客の本当のニーズが見えてきます。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="rounded-[3rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl bg-black">
+                <!-- Insta Gradient Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 opacity-90"></div>
+                
+                <!-- Abstract Circles -->
+                <div class="absolute top-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+                <div class="absolute bottom-0 right-0 w-64 h-64 bg-yellow-300 opacity-20 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2"></div>
+
+                <div class="relative z-10">
+                    <h2 class="serif-font text-3xl md:text-5xl font-bold mb-8">
+                        流れをつくろう。
+                    </h2>
+                    <p class="text-white/90 mb-12 text-lg">
+                        まずは実際のデモ画面で、<br>新しい営業フローを体験してください。
+                    </p>
+                    
+                    <!-- Updated CTA: Button Only -->
+                    <div class="flex justify-center">
+                        <a href="https://www.smileplusctg.com/contact" target="_blank" class="bg-white text-pink-600 px-12 py-5 rounded-full font-bold hover:bg-gray-100 transition shadow-lg whitespace-nowrap flex items-center justify-center gap-3 text-lg hover:scale-105 transform duration-300">
+                            <span>デモを見てみたい</span>
+                            <i class="fa-solid fa-circle-play text-xl"></i>
+                        </a>
+                    </div>
+                    
+                    <p class="text-xs text-white/60 mt-6 font-english tracking-wide">
+                        * CONTACT FORM
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 border-t border-gray-200 py-12 text-sm text-gray-500">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-orange-500 flex items-center justify-center text-white text-xs shadow-md">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <span class="font-bold text-gray-800 font-english text-lg">DeepDive Flow</span>
+            </div>
+            <div class="flex gap-8 font-medium">
+                <a href="#" class="hover:text-pink-600 transition">Company</a>
+                <a href="#" class="hover:text-pink-600 transition">Privacy</a>
+                <a href="#" class="hover:text-pink-600 transition">Contact</a>
+            </div>
+            <div class="font-english text-gray-400">
+                &copy; 2024 Customer Deep Dive Map.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
